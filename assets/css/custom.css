@@ -1,0 +1,241 @@
+/* Custom styles for Cloud RAG Architecture Comparison */
+
+:root {
+  --azure-color: #0072C6;
+  --aws-color: #FF9900;
+  --gcp-color: #4285F4;
+  --header-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Enhanced header */
+.page-header {
+  background: var(--header-bg);
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.project-name {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.project-tagline {
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  opacity: 0.95;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+/* Button styles */
+.btn {
+  display: inline-block;
+  margin: 0.5rem 0.25rem;
+  padding: 0.75rem 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.3rem;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Table improvements */
+table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+tbody tr:hover {
+  background-color: #f6f8fa;
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Mermaid diagram container */
+.mermaid {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f6f8fa;
+  border-radius: 0.5rem;
+  border: 1px solid #e1e4e8;
+}
+
+/* Code blocks */
+pre {
+  padding: 1rem;
+  overflow: auto;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 0.5rem;
+  border: 1px solid #e1e4e8;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 0.3rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* Headers with anchor links */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #24292e;
+}
+
+h1 {
+  font-size: 2rem;
+  border-bottom: 2px solid #e1e4e8;
+  padding-bottom: 0.3rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid #e1e4e8;
+  padding-bottom: 0.3rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: #0366d6;
+}
+
+/* Links */
+a {
+  color: #0366d6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0366d6;
+  text-decoration: underline;
+}
+
+/* Horizontal rules */
+hr {
+  height: 0.25rem;
+  padding: 0;
+  margin: 2rem 0;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  border: 0;
+  border-radius: 0.25rem;
+}
+
+/* List improvements */
+ul, ol {
+  padding-left: 2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e1e4e8;
+  text-align: center;
+  color: #6a737d;
+  font-size: 0.875rem;
+}
+
+.site-footer-owner {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .project-name {
+    font-size: 1.75rem;
+  }
+  
+  .project-tagline {
+    font-size: 1rem;
+  }
+  
+  table {
+    font-size: 0.875rem;
+  }
+  
+  th, td {
+    padding: 0.5rem;
+  }
+}
+
+/* Subgraph styling for Mermaid */
+.mermaid .cluster rect {
+  fill: #f6f8fa;
+  stroke: #e1e4e8;
+  stroke-width: 2px;
+}
+
+/* Provider-specific highlights */
+.azure-highlight {
+  color: var(--azure-color);
+  font-weight: 600;
+}
+
+.aws-highlight {
+  color: var(--aws-color);
+  font-weight: 600;
+}
+
+.gcp-highlight {
+  color: var(--gcp-color);
+  font-weight: 600;
+}

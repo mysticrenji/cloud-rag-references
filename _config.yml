@@ -5,9 +5,13 @@ title: Cloud RAG Architecture Comparison
 description: Comprehensive comparison of RAG architectures across Azure, AWS, and Google Cloud Platform
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site
+lang: en-US
+
+# GitHub settings
+show_downloads: false
 
 # Theme
-theme: jekyll-theme-cayman
+remote_theme: pages-themes/cayman@v0.2.0
 
 # Markdown settings
 markdown: kramdown
@@ -31,7 +35,16 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+  - "*.sh"
+  - "*.json"
 
 # Include files
 include:
   - _pages
+  - assets
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name
