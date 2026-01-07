@@ -10,8 +10,8 @@ lang: en-US
 # GitHub settings
 show_downloads: false
 
-# Theme
-remote_theme: pages-themes/cayman@v0.2.0
+# Theme - don't use remote theme, override with custom layout
+# theme: jekyll-theme-cayman
 
 # Markdown settings
 markdown: kramdown
@@ -21,7 +21,6 @@ kramdown:
 
 # Plugins
 plugins:
-  - jekyll-remote-theme
   - jekyll-sitemap
   - jekyll-seo-tag
 

@@ -117,7 +117,7 @@ graph LR
     style C fill:#4285F4,stroke:#fff,color:#fff
     style G fill:#4285F4,stroke:#fff,color:#fff
     style F fill:#4285F4,stroke:#fff,color:#fff
-***
+
 ```
 
 ### Part 1: Setup (Data Store)
