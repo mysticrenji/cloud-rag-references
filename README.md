@@ -1,6 +1,9 @@
 # Cloud RAG Architecture Comparison
 
 Comprehensive comparison of RAG (Retrieval-Augmented Generation) architectures across Azure, AWS, and Google Cloud Platform.
+### What is  RAG? (Simple Explanation)
+
+ RAG (Retrieval-Augmented Generation) acts like a **"Smart Librarian"** for your organization. Unlike standard AI models that rely on public internet data, a RAG system is connected directly to your private company data—such as PDFs, internal policies, and databases. When an employee asks a question, the system first "retrieves" the exact documents containing the answer from your secure storage. It then "augments" the AI's knowledge by feeding it those specific facts, allowing the model to "generate" a precise, professional answer. This process ensures the AI stops guessing (hallucinating) and instead provides verifiable answers with citations, keeping your data secure while instantly unlocking your institutional knowledge.
 
 ## 📑 Table of Contents
 
