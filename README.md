@@ -1,1 +1,146 @@
-# cloud-rag-references
+# Cloud RAG Architecture Comparison
+
+## 1. Provider Summary
+
+| Feature | **Azure (Microsoft)** | **AWS (Amazon)** | **Google Cloud (GCP)** |
+| :--- | :--- | :--- | :--- |
+| **Architecture Name** | *Azure OpenAI "On Your Data"* | *Knowledge Bases for Amazon Bedrock* | *Vertex AI Search & Conversation* |
+| **Storage** | Azure Blob Storage | Amazon S3 | Google Cloud Storage (GCS) |
+| **Ingestion Engine** | Azure AI Search Indexers | Knowledge Bases (Managed) | Vertex AI Agent Builder |
+| **Embedding Model** | Azure OpenAI (`text-embedding-3`) | Titan V2, Cohere, etc. | Vertex AI Embeddings (`text-embedding-gecko`) |
+| **Vector Database** | **Azure AI Search** (Tiered pricing) | **OpenSearch Serverless** (Hourly pricing) | **Vertex AI Vector Search** (Per-node/query) |
+| **LLM** | GPT-4o, GPT-4o-mini | Claude 3.5 Sonnet, Llama 3 | Gemini 1.5 Pro, Gemini 1.5 Flash |
+| **Key Advantage** | Best for Enterprise/Office 365 integration. | Most flexible model choice (Claude, Llama, Titan). | Best "out of the box" retrieval; unique "Grounding" feature. |
+| **Primary Cost Model** | **Fixed Monthly Tiers** (Service Tiers) | **Provisioned Capacity** (OCUs/Hour) | **Pay-Per-Query** (Great for startups) |
+
+---
+
+## 2. Architecture Diagrams
+
+### Azure RAG Architecture
+*Standard enterprise flow using Azure AI Search as the vector backbone.*
+
+```mermaid
+graph LR
+    subgraph Setup ["Part 1: Ingestion (One-time)"]
+        A[PDF Document] -->|1. Upload| B(Blob Storage)
+        B -->|2. Read & Chunk| C{Indexer}
+        C -->|3. Generate Vector| D[Azure OpenAI<br>Embedding Model]
+        D -->|4. Save| E[(Azure AI Search<br>Vector DB)]
+    end
+
+    subgraph Usage ["Part 2: Retrieval (Real-time)"]
+        F(User Question) -->|5. Convert to Vector| G[Azure OpenAI<br>Embedding Model]
+        G -->|6. Search| E
+        E -->|7. Return Context| H[App / Code]
+        H -->|8. Build Prompt| I[GPT-4 Model]
+        I -->|9. Answer| J(Final Response)
+    end
+
+    style E fill:#0072C6,stroke:#fff,color:#fff
+    style I fill:#0072C6,stroke:#fff,color:#fff
+```
+
+### Part 1: Setup (Indexing)
+
+1. **Upload:** You upload your files (PDFs, Word docs) to an **Azure Blob Storage** container.
+2. **Read & Chunk:** An **Azure AI Search Indexer** automatically detects the new file, opens it, and breaks the text into smaller, manageable pieces ("chunks").
+3. **Generate Vector:** The indexer sends these text chunks to the **Azure OpenAI Embedding Model**, which translates text into numbers (vectors).
+4. **Save:** These vectors are saved into the **Azure AI Search** index, ready to be searched.
+
+### Part 2: Usage (The User Asks a Question)
+
+5. **Convert:** When a user asks a question, your app sends the text to the same **Embedding Model** to turn the question into numbers.
+6. **Search:** The app sends those numbers to **Azure AI Search** to find the most similar document chunks.
+7. **Return Context:** Azure AI Search returns the specific paragraphs that contain the answer.
+8. **Build Prompt:** Your app combines the **User's Question** + **The Retrieved Paragraphs** into a single message for the AI.
+9. **Answer:** **GPT-4** reads the prompt and generates the final answer based *only* on the provided paragraphs.
+
+## AWS Bedrock Architecture
+*Serverless flow using "Knowledge Bases" to automate ingestion.*
+
+```mermaid
+graph LR
+    subgraph Setup ["Part 1: Knowledge Base"]
+        A[PDF Document] -->|1. Upload| B(Amazon S3)
+        B -->|2. Sync API| C[Bedrock<br>Knowledge Base]
+        C -->|3. Auto-Embed| D[Titan / Cohere<br>Model]
+        D -->|4. Store| E[(OpenSearch<br>Serverless)]
+    end
+
+    subgraph Usage ["Part 2: RetrieveAndGenerate"]
+        F(User Question) -->|5. Call API| G[Bedrock Agent<br>Runtime]
+        G -->|6. Semantic Search| E
+        E -->|7. Fetch Chunks| G
+        G -->|8. Augment| H[Claude 3.5 / Llama<br>LLM]
+        H -->|9. Generate| I(Final Response)
+    end
+
+    style E fill:#FF9900,stroke:#232F3E,color:#000
+    style C fill:#FF9900,stroke:#232F3E,color:#000
+```
+
+### Part 1: Setup (Knowledge Base)
+
+1. **Upload:** You upload documents to an **Amazon S3** bucket.
+2. **Sync:** You click the "Sync" button in **Bedrock Knowledge Bases**.
+3. **Auto-Embed:** AWS automatically splits the files and sends them to the **Titan/Cohere embedding model**.
+4. **Store:** The resulting vectors are securely stored in **Amazon OpenSearch Serverless**.
+
+### Part 2: Usage (RetrieveAndGenerate)
+
+5. **Call API:** The user asks a question. Your app makes a single API call: `RetrieveAndGenerate`.
+6. **Semantic Search:** Bedrock automatically searches the **OpenSearch** index for relevant info.
+7. **Fetch Chunks:** The relevant text chunks are retrieved internally by Bedrock.
+8. **Augment:** Bedrock automatically pastes these chunks into a prompt for the **Claude** or **Llama** model.
+9. **Generate:** The model returns the final answer to your application.
+10. 
+## Google Cloud (Vertex AI) Architecture
+*Simplified flow emphasizing "Grounding" and managed retrieval.*
+
+```mermaid
+graph LR
+    subgraph Setup ["Part 1: Data Store"]
+        A[PDF Document] -->|1. Upload| B(Cloud Storage GCS)
+        B -->|2. Import| C[Vertex AI<br>Agent Builder]
+        C -->|3. Index| D[(Vertex AI<br>Search Index)]
+    end
+
+    subgraph Usage ["Part 2: Grounding"]
+        F(User Question) -->|4. Ask with Grounding| G[Gemini Pro<br>Model]
+        G -->|5. Verify Facts| D
+        D -->|6. Retrieve Snippets| G
+        G -->|7. Cite Sources| G
+        G -->|8. Answer| H(Response w/ Citations)
+    end
+
+    style C fill:#4285F4,stroke:#fff,color:#fff
+    style G fill:#4285F4,stroke:#fff,color:#fff
+    style F fill:#4285F4,stroke:#fff,color:#fff
+***
+```
+
+### Part 1: Setup (Data Store)
+
+1. **Upload:** You upload your documents to a **Google Cloud Storage** bucket.
+2. **Import:** You create a "Data Store" in **Vertex AI Agent Builder** and point it to your bucket.
+3. **Index:** Google automatically parses, chunks, and indexes the content using its internal **Google Search** technology.
+
+### Part 2: Usage (Grounding)
+
+4. **Ask with Grounding:** The user asks a question. Your app sends it to the **Gemini** model with a "Grounding" tool attached.
+5. **Verify Facts:** Before answering, the **Gemini** model pauses and checks your **Vertex AI Search Index** for facts.
+6. **Retrieve Snippets:** It pulls specific sentences from your PDFs that prove the answer.
+7. **Cite Sources:** Gemini checks if the facts match the snippets.
+8. **Answer:** Gemini generates the response and includes clickable **citations** (footnotes) showing exactly where the info came from.
+
+
+## 3. Cloud RAG Pricing Comparison
+
+| Feature | **Azure (On Your Data)** | **AWS (Knowledge Bases)** | **Google (Vertex AI Agent)** |
+| :--- | :--- | :--- | :--- |
+| **Main Cost Driver** | **Search Service Tiers**<br>*(Fixed monthly cost)* | **Compute Units (OCUs)**<br>*(Hourly rate for vector DB)* | **Per-Query**<br>*(Pay per 1,000 searches)* |
+| **Vector Storage** | **Azure AI Search**<br>• Basic Tier: **~$75/mo**<br>• Standard Tier: **~$250/mo**<br>• Storage Optimized: **~$2,800+/mo** | **OpenSearch Serverless**<br>• **~$0.24** per OCU/hour<br>• Min. 2 OCUs (Indexing + Search)<br>• Start cost: **~$170/mo** minimum for always-on | **Vertex AI Search**<br>• **~$5.00** / GB / month<br>• First 10GB is often free (check specific promo) |
+| **Retrieval / Search** | Included in the Service Tier<br>*(Unlimited queries up to tier max)* | Included in OCU hourly cost | **$1.50 - $4.00** per 1,000 queries<br>*(Standard vs. Enterprise Edition)* |
+| **LLM Inference** | **Azure OpenAI** (Pay per Token)<br>• GPT-4o: **~$2.50** / 1M tokens (Input)<br>• GPT-4o-mini: **~$0.15** / 1M tokens | **Amazon Bedrock** (Pay per Token)<br>• Claude 3.5 Sonnet: **~$3.00** / 1M tokens (Input)<br>• Titan: Very low cost | **Gemini Models** (Pay per Token)<br>• Gemini 1.5 Flash: **~$0.075** / 1M tokens (Input)<br>• Gemini 1.5 Pro: **~$1.25** / 1M tokens |
+| **Data Processing** | Minimal<br>*(Built into indexer)* | Automatic chunking is included;<br>you pay for the embedding tokens. | Pay for "Unstructured Data" processing<br>*(document parsing)* |
