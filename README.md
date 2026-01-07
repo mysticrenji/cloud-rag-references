@@ -137,10 +137,26 @@ graph LR
 
 ## 3. Cloud RAG Pricing Comparison
 
+*Last Updated: January 2026*
+
 | Feature | **Azure (On Your Data)** | **AWS (Knowledge Bases)** | **Google (Vertex AI Agent)** |
 | :--- | :--- | :--- | :--- |
-| **Main Cost Driver** | **Search Service Tiers**<br>*(Fixed monthly cost)* | **Compute Units (OCUs)**<br>*(Hourly rate for vector DB)* | **Per-Query**<br>*(Pay per 1,000 searches)* |
-| **Vector Storage** | **Azure AI Search**<br>• Basic Tier: **~$75/mo**<br>• Standard Tier: **~$250/mo**<br>• Storage Optimized: **~$2,800+/mo** | **OpenSearch Serverless**<br>• **~$0.24** per OCU/hour<br>• Min. 2 OCUs (Indexing + Search)<br>• Start cost: **~$170/mo** minimum for always-on | **Vertex AI Search**<br>• **~$5.00** / GB / month<br>• First 10GB is often free (check specific promo) |
-| **Retrieval / Search** | Included in the Service Tier<br>*(Unlimited queries up to tier max)* | Included in OCU hourly cost | **$1.50 - $4.00** per 1,000 queries<br>*(Standard vs. Enterprise Edition)* |
-| **LLM Inference** | **Azure OpenAI** (Pay per Token)<br>• GPT-4o: **~$2.50** / 1M tokens (Input)<br>• GPT-4o-mini: **~$0.15** / 1M tokens | **Amazon Bedrock** (Pay per Token)<br>• Claude 3.5 Sonnet: **~$3.00** / 1M tokens (Input)<br>• Titan: Very low cost | **Gemini Models** (Pay per Token)<br>• Gemini 1.5 Flash: **~$0.075** / 1M tokens (Input)<br>• Gemini 1.5 Pro: **~$1.25** / 1M tokens |
-| **Data Processing** | Minimal<br>*(Built into indexer)* | Automatic chunking is included;<br>you pay for the embedding tokens. | Pay for "Unstructured Data" processing<br>*(document parsing)* |
+| **Main Cost Driver** | **Search Service Tiers**<br>*(Fixed monthly cost)* | **Compute Units (OCUs)**<br>*(Hourly rate for vector DB)* | **Per-Query + Storage**<br>*(Pay per use)* |
+| **Vector Storage** | **Azure AI Search**<br>• Basic Tier: **$73.91/mo**<br>• Standard S1: **$247.17/mo**<br>• Standard S2: **$988.67/mo**<br>• Storage Optimized L1: **$2,469.33/mo** | **OpenSearch Serverless**<br>• **$0.24** per OCU/hour<br>• Min. 2 OCUs (Indexing + Search)<br>• Base cost: **~$350/mo** for 24/7<br>• Additional OCU scaling as needed | **Vertex AI Search**<br>• Storage: **$0.05/GB/month**<br>• Index creation: **$0.65/GB** (one-time)<br>• Free tier: First 1 million documents |
+| **Retrieval / Search** | Included in Service Tier<br>*(Unlimited queries)* | Included in OCU hourly cost<br>*(Query performance scales with OCUs)* | **Enterprise Edition:**<br>• $4.00 per 1,000 queries<br>• Includes grounding & citations<br>**Standard Edition:**<br>• $1.50 per 1,000 queries |
+| **Embedding Models** | **Azure OpenAI Embeddings**<br>• text-embedding-3-small: **$0.02/1M tokens**<br>• text-embedding-3-large: **$0.13/1M tokens**<br>• text-embedding-ada-002: **$0.10/1M tokens** | **Amazon Bedrock Embeddings**<br>• Titan Embeddings G1: **$0.10/1M tokens**<br>• Titan Embeddings V2: **$0.02/1M tokens**<br>• Cohere Embed: **$0.10/1M tokens** | **Vertex AI Embeddings**<br>• text-embedding-004: **$0.025/1M tokens**<br>• text-multilingual-embedding-002: **$0.025/1M tokens**<br>• textembedding-gecko: **$0.025/1M tokens** |
+| **LLM Inference** | **Azure OpenAI** (Pay per Token)<br>• **GPT-4o**: $2.50 (input) / $10.00 (output) per 1M tokens<br>• **GPT-4o-mini**: $0.15 (input) / $0.60 (output) per 1M tokens<br>• **GPT-4 Turbo**: $10.00 (input) / $30.00 (output) per 1M tokens<br>• **o1-preview**: $15.00 (input) / $60.00 (output) per 1M tokens | **Amazon Bedrock** (Pay per Token)<br>• **Claude 3.5 Sonnet v2**: $3.00 (input) / $15.00 (output) per 1M tokens<br>• **Claude 3.5 Haiku**: $0.80 (input) / $4.00 (output) per 1M tokens<br>• **Llama 3.3 70B**: $0.99 (input) / $0.99 (output) per 1M tokens<br>• **Titan Text Premier**: $0.50 (input) / $1.50 (output) per 1M tokens | **Vertex AI Models** (Pay per Token)<br>• **Gemini 2.0 Flash**: $0.075 (input) / $0.30 (output) per 1M tokens<br>• **Gemini 1.5 Pro**: $1.25 (input) / $5.00 (output) per 1M tokens<br>• **Gemini 1.5 Flash**: $0.075 (input) / $0.30 (output) per 1M tokens<br>• **Gemini 1.0 Pro**: $0.50 (input) / $1.50 (output) per 1M tokens |
+| **Data Processing** | **AI Search Indexing**<br>• Included in service tier<br>• OCR: Additional charge via AI Services<br>• Skillsets: Custom enrichment | **Knowledge Base Sync**<br>• Chunking: Included<br>• Embedding generation costs apply<br>• S3 storage: $0.023/GB/month | **Document AI Processing**<br>• Parsing: $0.01 per page<br>• OCR: $1.50 per 1,000 pages<br>• Classification: $0.02 per page<br>• Chunking: Included |
+| **Additional Costs** | • Azure Blob Storage: **$0.018/GB/month**<br>• Bandwidth: $0.05-$0.087/GB egress<br>• Private endpoints: $0.01/hour | • S3 Storage: **$0.023/GB/month**<br>• Data transfer: $0.09/GB out to internet<br>• VPC endpoints: $0.01/hour | • Cloud Storage: **$0.020/GB/month**<br>• Network egress: $0.12/GB<br>• Logging: Additional if enabled |
+| **Free Tier / Credits** | • $200 Azure credit (new accounts)<br>• Free tier: Limited AI services | • $300 AWS credits (new accounts)<br>• Free tier: 12 months limited | • $300 GCP credits (new accounts)<br>• Free tier: Always free limits |
+| **Best For** | **Predictable monthly costs**<br>Enterprise with fixed budgets<br>High query volume | **Flexible scaling**<br>Variable workloads<br>Multi-model experimentation | **Pay-as-you-grow**<br>Startups & prototypes<br>Variable traffic |
+
+### Cost Example: 10,000 Documents, 100K Queries/Month
+
+| Provider | **Estimated Monthly Cost** | **Breakdown** |
+| :--- | :--- | :--- |
+| **Azure** | **$320 - $400** | • Search: $247 (Standard S1)<br>• LLM: $30-50 (GPT-4o-mini)<br>• Storage: $20<br>• Embeddings: $10 |
+| **AWS** | **$380 - $450** | • OpenSearch: $350 (2 OCUs 24/7)<br>• LLM: $20-30 (Llama 3.3)<br>• Storage: $5<br>• Embeddings: $5 |
+| **Google** | **$480 - $550** | • Queries: $400 (100K @ $4/1K)<br>• LLM: $40-60 (Gemini 1.5 Flash)<br>• Storage: $20<br>• Embeddings: $5 |
+
+*Note: Actual costs vary based on document size, query complexity, response length, and region. Prices shown are for US regions.*
