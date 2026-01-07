@@ -1,0 +1,37 @@
+# Jekyll configuration for GitHub Pages
+
+# Site settings
+title: Cloud RAG Architecture Comparison
+description: Comprehensive comparison of RAG architectures across Azure, AWS, and Google Cloud Platform
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site
+
+# Theme
+theme: jekyll-theme-cayman
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude files from processing
+exclude:
+  - .claude/
+  - .git/
+  - .github/
+  - LICENSE
+  - README.md.backup
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Include files
+include:
+  - _pages
